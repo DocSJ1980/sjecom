@@ -31,16 +31,26 @@ export const StoreModal = () => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
     })
+    /**
+     * Submit the form data to create a store.
+     * @param values - The values from the form.
+     */
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log(values)
-        //TODO: Create Store
+
         try {
             setLoading(true)
+
+            // Send a POST request to create a store
             const response = await axios.post("/api/stores", values)
+
+            // Display a success message
             toast.success("Store created successfully")
             console.log("[StoreModal]: ", response)
 
+            // Redirect to the newly created store page
+            window.location.assign(`/${response.data.id}`)
         } catch (error) {
+            // Display an error message
             toast.error("Error creating store")
             console.log("[StoreModal]: ", error)
         } finally {
