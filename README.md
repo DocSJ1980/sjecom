@@ -20,3 +20,9 @@ next-js
 clerk-authentication
 shadcn-ui
 zustand
+zod
+react-hook-form
+prisma
+mysql
+planet-scale
+
