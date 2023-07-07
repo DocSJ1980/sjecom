@@ -1,6 +1,6 @@
 "use client"
 
-import { Store } from "@prisma/client"
+import { Billboard } from "@prisma/client"
 import React, { useState } from "react"
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -19,22 +19,26 @@ import { AlertModal } from "./modals/alert-modal"
 import { ApiAlert } from "./ui/api-alert"
 import { useOrigin } from "@/hooks/use-origin"
 
-interface SettingsFormProps {
-    initialData: Store | null
+interface BillboardFormProps {
+    initialData: Billboard
 }
 
 const formSchema = z.object({
-    name: z.string().min(1),
+    label: z.string().min(1),
+    imageUrl: z.string().min(1)
 })
 
-type SettingFormValues = z.infer<typeof formSchema>
+type BillboardFormValues = z.infer<typeof formSchema>
 
-export const SettingsForm: React.FC<SettingsFormProps> = ({
+export const BillboardForm: React.FC<BillboardFormProps> = ({
     initialData
 }) => {
-    const form = useForm<SettingFormValues>({
+    const form = useForm<BillboardFormValues>({
         resolver: zodResolver(formSchema),
-        defaultValues: initialData
+        defaultValues: initialData || {
+            label: "",
+            imageUrl: ""
+        }
     })
     const params = useParams()
     const router = useRouter()
@@ -43,7 +47,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
 
-    const onSubmit = async (data: SettingFormValues) => {
+    const onSubmit = async (data: BillboardFormValues) => {
         console.log("[Settings-Form]: ", data)
         try {
             setLoading(true)

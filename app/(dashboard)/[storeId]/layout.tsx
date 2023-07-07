@@ -17,7 +17,7 @@ export default async function DashboardLayout({
 }) {
     const { userId } = auth()
     if (!userId) redirect("/sign-in")
-    const store = await prismadb.store.findFirst({
+    const store = await prismadb.Store.findFirst({
         where: {
             id: params.storeId,
             userId

@@ -7,7 +7,7 @@ import prismadb from "@/lib/prismadb"
 const Navbar = async () => {
     const { userId } = auth()
     if (!userId) redirect("/sign-in")
-    const stores = await prismadb.store.findMany({
+    const stores = await prismadb.Store.findMany({
         where: {
             userId
         }

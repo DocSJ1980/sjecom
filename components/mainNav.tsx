@@ -3,7 +3,6 @@ import { UserButton } from "@clerk/nextjs"
 import { useParams, usePathname } from "next/navigation"
 
 import { cn } from "@/lib/utils"
-import { use } from "react"
 import Link from "next/link"
 
 const MainNav = ({
@@ -15,6 +14,16 @@ const MainNav = ({
     const pathname = usePathname()
     const params = useParams()
     const routes = [
+        {
+            href: `/${params.storeId}`,
+            label: "Overview",
+            active: pathname === `/${params.storeId}`,
+        },
+        {
+            href: `/${params.storeId}/billboards`,
+            label: "Billboards",
+            active: pathname === `/${params.storeId}/billboards`,
+        },
         {
             href: `/${params.storeId}/settings`,
             label: "Settings",

@@ -16,7 +16,7 @@ export async function POST(
         if (!name) {
             return new NextResponse("Bad Request", { status: 400 })
         }
-        const store = await prismadb.store.create({
+        const store = await prismadb.Store.create({
             data: {
                 name,
                 userId
