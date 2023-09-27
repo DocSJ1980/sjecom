@@ -56,6 +56,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
             setLoading(false)
         }
     }
+
     const onDelete = async () => {
         try {
             setLoading(true)

@@ -20,7 +20,7 @@ import { ApiAlert } from "./ui/api-alert"
 import { useOrigin } from "@/hooks/use-origin"
 
 interface BillboardFormProps {
-    initialData: Billboard
+    initialData: Billboard | null
 }
 
 const formSchema = z.object({
@@ -46,6 +46,11 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
 
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
+
+    const title = initialData ? "Edit billboard" : "Create billboard"
+    const description = initialData ? "Edit a billboard" : "Create a new billboard"
+    const toastMessage = initialData ? "Billboard updated." : "Billboard created."
+    const action = initialData ? "Save Changes" : "Create"
 
     const onSubmit = async (data: BillboardFormValues) => {
         console.log("[Settings-Form]: ", data)
@@ -85,17 +90,17 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
             />
             <div className="flex items-center justify-between">
                 <Heading
-                    title="Settings"
-                    description="Manage store preferences"
+                    title={title}
+                    description={description}
                 />
-                <Button
+                {initialData && <Button
                     disabled={loading}
                     variant={"destructive"}
                     size='icon'
                     onClick={() => setOpen(true)}
                 >
                     <Trash className="h-4 w-4" />
-                </Button>
+                </Button>}
             </div>
             <Separator />
             <Form {...form}>
@@ -103,14 +108,14 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                     <div className="grid grid-cols-3 gap-3">
                         <FormField
                             control={form.control}
-                            name="name"
+                            name="label"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Name</FormLabel>
                                     <FormControl>
                                         <Input
                                             disabled={loading}
-                                            placeholder="Store Name"
+                                            placeholder="Billboard label"
                                             {...field}
                                         />
                                     </FormControl>
@@ -120,7 +125,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                         />
                     </div>
                     <Button disabled={loading} className="ml-auto" type="submit" >
-                        Save Changes
+                        {action}
                     </Button>
                 </form>
             </Form>
