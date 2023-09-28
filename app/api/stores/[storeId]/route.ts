@@ -20,7 +20,7 @@ export async function PATCH(
         if (!name) {
             return new NextResponse("Name is required", { status: 400 })
         }
-        const store = await prismadb.Store.updateMany({
+        const store = await prismadb.store.updateMany({
             where: {
                 id: params.storeId,
                 userId,
@@ -47,7 +47,7 @@ export async function DELETE(
         if (!params.storeId) {
             return new NextResponse("Store Id is required", { status: 400 })
         }
-        const store = await prismadb.Store.deleteMany({
+        const store = await prismadb.store.deleteMany({
             where: {
                 id: params.storeId,
                 userId,
