@@ -16,8 +16,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "./ui/input"
 import { useParams, useRouter } from "next/navigation"
 import { AlertModal } from "./modals/alert-modal"
-import { ApiAlert } from "./ui/api-alert"
-import { useOrigin } from "@/hooks/use-origin"
 import ImageUpload from "@/components/ui/image-upload"
 
 interface BillboardFormProps {
@@ -43,7 +41,6 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     })
     const params = useParams()
     const router = useRouter()
-    const origin = useOrigin()
 
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -74,9 +71,9 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true)
-            await axios.delete(`/api/stores/${params.storeId}/billboards/${params.billboardId}`)
+            await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`)
             router.refresh()
-            router.push("/")
+            router.push(`/${params.storeId}/billboards`)
             toast.success("Billboard deleted successfully")
         } catch (error) {
             toast.error("Make sure you removed categories using this billboard.")
@@ -155,11 +152,6 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                 </form>
             </Form>
             <Separator />
-            <ApiAlert
-                title="NEXT_PUBLIC_API_URL"
-                description={`${origin}/api/${params.storeId}`}
-                variant="public"
-            />
         </>
     )
 }
